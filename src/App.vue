@@ -9,14 +9,20 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :PostData="postData" />
+  <Container :postData="postData" :step="step" :uploadFileUrl="uploadFileUrl"/>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input @change="upload" multiple type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
  </div>
+
+  <!-- ##탭 만들기 연습
+     <div>{{this.tapMassages[this.step]}}</div>
+    <button @click="onClickBtn0">버튼0</button>
+    <button @click="onClickBtn1">버튼1</button>
+    <button @click="onClickBtn2">버튼2</button> -->
 </template>
  
 <script>
@@ -30,9 +36,32 @@ export default {
   },
   data() {
     return {
-      postData : PostData
+      postData : PostData,
+      step : 0,
+      uploadFileUrl : ''
+      // step : 0, ##탭 만들기 연습
+      // tapMassages : ['내용0', '내용1', '내용2'], ##탭 만들기 연습
     }
+  },
+  methods : {
+    upload(e) {
+      let file = e.target.files
+      this.uploadFileUrl = URL.createObjectURL(file[0])
+      this.step++;
+    }
+    /* ##탭 만들기 연습
+      onClickBtn0() {
+        this.step = 0
+      },
+      onClickBtn1() {
+        this.step = 1
+      },
+      onClickBtn2() {
+        this.step = 2
+      },
+    */
   }
+
 }
 </script>
 
