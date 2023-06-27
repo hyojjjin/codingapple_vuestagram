@@ -8,19 +8,15 @@
     <div v-if="step===1">
       <div class="upload-image" :style="`background-image:url(${uploadFileUrl})`"></div>
       <div class="filters">
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
+        <FilterBox v-for="filter in filters" :key="i" :filter="filter" :uploadFileUrl="uploadFileUrl"></FilterBox>
       </div>
     </div>
 
     <!-- 글작성페이지 -->
     <div v-if="step===2">
-      <div class="upload-image"></div>
+      <div class="upload-image" :style="`background-image:url(${uploadFileUrl})`"></div>
       <div class="write">
-        <textarea class="write-box">write!</textarea>
+        <textarea @input="$emit('writeContent', $event.target.value)" class="write-box">write!</textarea>
       </div>
     </div>
   </div>
@@ -28,15 +24,25 @@
 
 <script>
 import Post from './Post.vue';
+import FilterBox from './FilterBox.vue';
 export default {
   name: 'Container',
   components: {
-    Post : Post
+    Post : Post,
+    FilterBox : FilterBox
   },
   props: {
     postData : Array,
     step : Number,
     uploadFileUrl : String
+  },
+  data() {
+    return {
+      filters : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", 
+                  "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", 
+                  "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"
+                ]
+    }
   }
 }
 </script>
