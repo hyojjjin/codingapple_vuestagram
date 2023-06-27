@@ -4,19 +4,26 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step !=2" @click="onClickNext">Next</li>
+      <li v-if="step===2" @click="onClickPublish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :PostData="postData" />
+  <Container :postData="postData" :step="step" :uploadFileUrl="uploadFileUrl" @writeContent="writeContent" />
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input @change="upload" multiple type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
  </div>
+
+  <!-- ##탭 만들기 연습
+     <div>{{this.tapMassages[this.step]}}</div>
+    <button @click="onClickBtn0">버튼0</button>
+    <button @click="onClickBtn1">버튼1</button>
+    <button @click="onClickBtn2">버튼2</button> -->
 </template>
  
 <script>
@@ -30,9 +37,53 @@ export default {
   },
   data() {
     return {
-      postData : PostData
+      postData : PostData,
+      step : 0,
+      uploadFileUrl : '',
+      newPostContent : ''
+      // step : 0, ##탭 만들기 연습
+      // tapMassages : ['내용0', '내용1', '내용2'], ##탭 만들기 연습
     }
+  },
+  methods : {
+    upload(e) {
+      let file = e.target.files
+      this.uploadFileUrl = URL.createObjectURL(file[0])
+      this.step++;
+    },
+    onClickNext(){
+      this.step++
+    },
+    onClickPublish(){
+      var newPost = {      
+        name: "Kim Hyun",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.uploadFileUrl,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.newPostContent,
+        filter: "perpetua"
+      };
+      this.postData.unshift(newPost);
+      this.step = 0;
+    },
+    writeContent(e) {
+      this.newPostContent = e
+    }
+    /* ##탭 만들기 연습
+      onClickBtn0() {
+        this.step = 0
+      },
+      onClickBtn1() {
+        this.step = 1
+      },
+      onClickBtn2() {
+        this.step = 2
+      },
+    */
   }
+
 }
 </script>
 

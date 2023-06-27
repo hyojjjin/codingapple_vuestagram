@@ -10,7 +10,7 @@
       <p><strong>{{data.filter}}</strong> {{data.content}}</p>
       <p class="date">{{data.date}}</p>
     </div>
-</div> 
+  </div> 
 </template>
 
 <script>
