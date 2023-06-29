@@ -1,5 +1,8 @@
 <template>
-  <div class="filter-item" :class="`${filter}`" :style="`background-image:url(${uploadFileUrl})`"></div> 
+  <div :class="filter + ' filter-item'" :style="`background-image:url(${uploadFileUrl})`">
+    <slot></slot>
+    <!-- <button @click="fire">버튼</button> -->
+  </div> 
 </template>
 
 <script>
@@ -8,6 +11,11 @@ export default {
   props : {
     uploadFileUrl : String,
     filter : String
+  },
+  methods : {
+    fire() {
+      this.emitter.emit('이벤트명', '데이터')
+    }
   }
 }
 </script>

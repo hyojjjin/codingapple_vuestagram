@@ -70,6 +70,11 @@ export default {
     },
     writeContent(e) {
       this.newPostContent = e
+    },
+    mounted() {
+      this.emitter.on('작명', (a) => {
+        console.log(a)
+      })
     }
     /* ##탭 만들기 연습
       onClickBtn0() {
